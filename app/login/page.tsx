@@ -54,9 +54,8 @@ export default function LoginPage() {
         <AtentoLogo variant="full" className="h-10" />
         <span className="text-white text-sm font-medium">Acelerador De Aprendizaje</span>
       </div>
-
       <div className="flex flex-1 items-center justify-center">
-        <Card className="w-full max-w-md border border-white bg-transparent text-white rounded-xl shadow-lg">
+        <Card className="w-full max-w-md bg-transparent text-white shadow-none border-0">
           <CardHeader className="text-center space-y-4">
             <CardTitle className="text-2xl font-bold">Iniciar Sesión</CardTitle>
             <CardDescription className="text-gray-300">
@@ -75,10 +74,9 @@ export default function LoginPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   disabled={isLoading}
-                  className="rounded-full bg-gray-700 border border-gray-600 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-blue-400"
+                  className="rounded-full bg-white/10 border border-gray-500 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-blue-400"
                 />
               </div>
-
               <div className="space-y-2">
                 <Label htmlFor="password" className="text-gray-200">Contraseña</Label>
                 <Input
@@ -89,28 +87,28 @@ export default function LoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   disabled={isLoading}
-                  className="rounded-full bg-gray-700 border border-gray-600 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-blue-400"
+                  className="rounded-full bg-white/10 border border-gray-500 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-blue-400"
                 />
               </div>
-
               {error && (
                 <Alert variant="destructive" className="rounded-md">
                   <AlertDescription>{error}</AlertDescription>
                 </Alert>
               )}
-
-              <Button
-                type="submit"
-                className="w-full rounded-full bg-blue-500 hover:bg-blue-600 text-white font-semibold shadow-md"
-                disabled={isLoading}
-              >
-                {isLoading ? "Iniciando sesión..." : "Acceder"}
-              </Button>
-
-              <div className="text-center">
+              <div className="text-right">
                 <Link href="/forgot-password" className="text-sm text-blue-400 hover:underline">
                   ¿Olvidaste tu contraseña?
                 </Link>
+              </div>
+              <Button
+                type="submit"
+                className="w-full rounded-full border border-blue-400 text-blue-400 font-semibold bg-transparent hover:bg-blue-500/10"
+                disabled={isLoading}
+              >
+                {isLoading ? "Iniciando sesión..." : "ACCEDER"}
+              </Button>
+              <div className="text-center">
+              
               </div>
             </form>
           </CardContent>
