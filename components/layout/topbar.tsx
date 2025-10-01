@@ -34,6 +34,7 @@ export function Topbar() {
   return (
     <header className="h-16 bg-background border-b border-border flex items-center justify-between px-6">
       <div className="flex items-center space-x-4">
+        <AtentoLogo variant="reduced" />
         <div className="hidden md:block">
           <h1 className="text-lg font-semibold text-foreground">Acelerador de Ventas</h1>
         </div>

@@ -3,14 +3,15 @@
 import type React from "react"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { AtentoLogo } from "@/components/atento-logo"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import Link from "next/link"
-import { ArrowLeft, CheckCircle } from "lucide-react"
+import { ArrowLeft } from "lucide-react"
+
+import Navbar from "@/components/navbar"
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("")
@@ -22,49 +23,58 @@ export default function ForgotPasswordPage() {
     e.preventDefault()
     setIsLoading(true)
 
-    // Simulación API
+    // Simulacion API
     setTimeout(() => {
       setIsLoading(false)
       setIsSubmitted(true)
     }, 2000)
   }
-
+  // Vista cuando ya se envió el correo
   if (isSubmitted) {
     return (
-      <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#0A1734] via-[#0A1734] to-[#3B2447]">
-        <div className="flex justify-between items-center px-8 py-6">
-          <AtentoLogo variant="full" className="h-10" />
-          <span className="text-white text-sm font-medium">Acelerador De Aprendizaje</span>
-        </div>
-        <div className="flex flex-1 items-center justify-center">
+      <div className="min-h-screen flex flex-col">
+        <Navbar/>
+        <div className="flex items-center justify-center py-10">
           <Card className="w-full max-w-md bg-transparent text-white shadow-none border-0">
-            <CardHeader className="text-center space-y-4">
+            <CardHeader className="text-center space-y-6">
               <div className="flex justify-center">
-                <div className="h-16 w-16 flex items-center justify-center rounded-full bg-blue-500/80">
-                  <CheckCircle className="h-10 w-10 text-white" />
+                <div className="h-16 w-16 flex items-center justify-center rounded-full bg-transparent border border-[#81C7EA]">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="28px"
+                    viewBox="0 -960 960 960"
+                    width="28px"
+                    fill="#81C7EA"
+                  >
+                    <path d="M638-80 468-250l56-56 114 114 226-226 56 56L638-80ZM480-520l320-200H160l320 200Zm0 80L160-640v400h206l80 80H160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v174l-80 80v-174L480-440Z"/>
+                  </svg>
                 </div>
               </div>
-              <CardTitle className="text-2xl font-bold">Correo Enviado</CardTitle>
-              <CardDescription className="text-gray-300">
-                Hemos enviado las instrucciones para restablecer tu contraseña a <strong>{email}</strong>
+
+              <CardTitle>Correo Enviado</CardTitle>
+
+              <CardDescription>
+                Hemos enviado las instrucciones para restablecer tu contraseña a{" "}
+                <span className=" text-[#81C7EA] font-medium">{email}</span>
               </CardDescription>
             </CardHeader>
+
             <CardContent>
               <div className="space-y-4">
-                <Alert className="rounded-md bg-white/10 border border-gray-600 [&_*]:!text-gray-200">
-                <AlertDescription>
-                  Revisa tu bandeja de entrada y sigue las instrucciones del correo. Si no lo encuentra, revisa tu carpeta de spam.
-                </AlertDescription>
+                <Alert>
+                  <AlertDescription>
+                    Revisa tu bandeja de entrada y sigue las instrucciones del correo. 
+                    Si no lo encuentras, revisa tu carpeta de spam.
+                  </AlertDescription>
                 </Alert>
-                <Link href="/login">
-                  <Button
-                    variant="outline"
-                    className="w-full rounded-full border border-blue-400 text-blue-400 bg-transparent hover:bg-blue-500/10"
-                  >
-                    <ArrowLeft className="mr-2 h-4 w-4" />
-                    Volver al inicio de sesión
-                  </Button>
-                </Link>
+
+                <Link
+                href="/login"
+                className="w-full flex items-center text-[14px] font-medium justify-center gap-2 rounded-full border-0 text-[#81C7EA] bg-transparent hover:text-white hover:underline"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                VOLVER A INICIO SESIÓN
+              </Link>
               </div>
             </CardContent>
           </Card>
@@ -72,25 +82,22 @@ export default function ForgotPasswordPage() {
       </div>
     )
   }
-
+  // Vista inicial (formulario para pedir reset de contraseña)
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#0A1734] via-[#0A1734] to-[#3B2447]">
-      <div className="flex justify-between items-center px-8 py-6">
-        <AtentoLogo variant="full" className="h-10" />
-        <span className="text-white text-sm font-medium">Acelerador De Aprendizaje</span>
-      </div>
-      <div className="flex flex-1 items-center justify-center">
+    <div className="min-h-screen flex flex-col">
+      <Navbar/>
+      <div className="flex items-center justify-center py-20">
         <Card className="w-full max-w-md bg-transparent text-white shadow-none border-0">
           <CardHeader className="text-center space-y-4">
-            <CardTitle className="text-2xl font-bold">Recuperar Contraseña</CardTitle>
-            <CardDescription className="text-gray-300">
+            <CardTitle >Recuperar Contraseña</CardTitle>
+            <CardDescription >
               Ingresa tu correo electrónico y te enviaremos las instrucciones para restablecer tu contraseña
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-7">
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-gray-200">Correo electrónico</Label>
+                <Label htmlFor="email" className="px-3">Correo Electrónico</Label>
                 <Input
                   id="email"
                   type="email"
@@ -99,25 +106,27 @@ export default function ForgotPasswordPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   disabled={isLoading}
-                  className="rounded-full bg-white/10 border border-gray-500 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-blue-400"
+                  className="rounded-full text-[15px] bg-white/20 text-white placeholder:text-gray-390 focus:ring-2 focus:ring-white"
                 />
               </div>
-              <Button
-                type="submit"
-                className="w-full rounded-full border border-blue-400 text-blue-400 font-semibold bg-transparent hover:bg-blue-500/10"
-                disabled={isLoading}
-              >
-                {isLoading ? "Enviando..." : "Enviar Instrucciones"}
-              </Button>
-              <Link href="/login">
+              <div className="flex justify-center">
                 <Button
-                  variant="outline"
-                  className="w-full rounded-full border border-blue-400 text-blue-400 bg-transparent hover:bg-blue-500/10"
+                variant={"outline"}
+                  type="submit"
+                  className="w-70 rounded-full"
+                  disabled={isLoading}
                 >
-                  <ArrowLeft className="mr-2 h-4 w-4" />
-                  Volver al inicio de sesión
+                  {isLoading ? "Enviando..." : "ENVIAR INSTRUCCIONES"}
                 </Button>
+              </div>
+              <Link
+                href="/login"
+                className="w-full flex items-center text-[14px] font-medium justify-center gap-2 rounded-full border-0 text-[#81C7EA] bg-transparent hover:text-white hover:underline"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                VOLVER A INICIO SESIÓN
               </Link>
+
             </form>
           </CardContent>
         </Card>

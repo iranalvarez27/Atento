@@ -63,6 +63,7 @@ export function Sidebar({ className }: SidebarProps) {
         className,
       )}
     >
+      {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-sidebar-border">
         {!isCollapsed && <AtentoLogo variant="reduced" />}
         <Button
@@ -75,6 +76,7 @@ export function Sidebar({ className }: SidebarProps) {
         </Button>
       </div>
 
+      {/* Navigation */}
       <nav className="flex-1 p-4 space-y-2">
         {navigationItems.map((item) => {
           const Icon = item.icon
@@ -83,11 +85,12 @@ export function Sidebar({ className }: SidebarProps) {
           return (
             <Link key={item.href} href={item.href}>
               <Button
+                variant={isActive ? "default" : "ghost"}
                 className={cn(
-                  "w-full justify-start bg-transparent hover:bg-transparent shadow-none",
+                  "w-full justify-start text-sidebar-foreground",
                   isActive
-                    ? "text-[#38BDF8] font-semibold" 
-                    : "text-sidebar-foreground hover:text-[#38BDF8]", 
+                    ? "bg-sidebar-primary text-sidebar-primary-foreground"
+                    : "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
                   isCollapsed && "px-2",
                 )}
               >
@@ -99,6 +102,7 @@ export function Sidebar({ className }: SidebarProps) {
         })}
       </nav>
 
+      {/* User info and logout */}
       <div className="p-4 border-t border-sidebar-border">
         {!isCollapsed && (
           <div className="mb-3">
@@ -109,11 +113,9 @@ export function Sidebar({ className }: SidebarProps) {
         <div className="space-y-2">
           <Link href="/config">
             <Button
+              variant="ghost"
               className={cn(
-                "w-full justify-start bg-transparent hover:bg-transparent shadow-none",
-                pathname === "/config"
-                  ? "text-[#38BDF8] font-semibold" 
-                  : "text-sidebar-foreground hover:text-[#38BDF8]",
+                "w-full justify-start text-sidebar-foreground hover:bg-sidebar-accent",
                 isCollapsed && "px-2",
               )}
             >
@@ -122,10 +124,10 @@ export function Sidebar({ className }: SidebarProps) {
             </Button>
           </Link>
           <Button
+            variant="ghost"
             onClick={handleLogout}
             className={cn(
-              "w-full justify-start bg-transparent hover:bg-transparent shadow-none",
-              "text-sidebar-foreground hover:text-[#38BDF8]", 
+              "w-full justify-start text-sidebar-foreground hover:bg-sidebar-accent",
               isCollapsed && "px-2",
             )}
           >
