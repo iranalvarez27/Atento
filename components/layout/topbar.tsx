@@ -1,6 +1,5 @@
 "use client"
 
-import { AtentoLogo } from "@/components/atento-logo"
 import { Button } from "@/components/ui/button"
 import { getCurrentUser, logout } from "@/lib/auth"
 import { useRouter } from "next/navigation"
@@ -17,40 +16,33 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 export function Topbar() {
   const user = getCurrentUser()
   const router = useRouter()
-
-  const handleLogout = () => {
-    logout()
-    router.push("/login")
-  }
-
   if (!user) return null
 
-  const initials = user.name
-    .split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase()
+  const initials = user.name.split(" ").map(n => n[0]).join("").toUpperCase()
 
   return (
-    <header className="h-16 bg-background border-b border-border flex items-center justify-between px-6">
-      <div className="flex items-center space-x-4">
-        <div className="hidden md:block">
-          <h1 className="text-lg font-semibold text-foreground">Acelerador de Ventas</h1>
-        </div>
+    <header className="topbar-soft">
+      <div className="hidden md:block">
+        <h1 className="text-lg font-semibold text-neutral-800">Acelerador de Ventas</h1>
       </div>
 
-      <div className="flex items-center space-x-4">
-        <Button variant="ghost" size="sm">
-          <Bell className="h-4 w-4" />
-        </Button>
-
+      <div className="flex items-center gap-2">
+        
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-              <Avatar className="h-8 w-8">
-                <AvatarFallback className="bg-primary text-primary-foreground">{initials}</AvatarFallback>
+            <div className="user-chip cursor-pointer">
+              <Avatar className="h-8 w-8 ring-2 ring-white/60">
+                <AvatarFallback className="bg-blue-600 text-white">{initials}</AvatarFallback>
               </Avatar>
-            </Button>
+              <div className="hidden md:block text-left">
+                <div className="text-sm font-semibold leading-tight text-neutral-900">
+                  {user.name}
+                </div>
+                <div className="text-[11px] text-neutral-500 capitalize">
+                  {user.role}
+                </div>
+              </div>
+            </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56" align="end" forceMount>
             <div className="flex flex-col space-y-1 p-2">
@@ -64,7 +56,10 @@ export function Topbar() {
               <span>Configuración</span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleLogout}>
+            <DropdownMenuItem
+              onClick={() => { logout(); router.push("/login"); }}
+              className="text-red-600"
+            >
               <LogOut className="mr-2 h-4 w-4" />
               <span>Cerrar Sesión</span>
             </DropdownMenuItem>
