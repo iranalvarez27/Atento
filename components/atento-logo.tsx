@@ -8,17 +8,17 @@ interface AtentoLogoProps {
 
 export function AtentoLogo({ variant = "full", className }: AtentoLogoProps) {
   const sizeClasses = {
-    full: "h-12 w-auto",
-    reduced: "h-8 w-auto",
-    mini: "h-6 w-auto",
+    full: "h-[80px] w-auto",     // tamaño grande para encabezados (≈200px ancho real)
+    reduced: "h-[64px] w-auto",  // tamaño medio (≈160px ancho real)
+    mini: "h-[40px] w-auto",     // mínimo aceptable (≈100px ancho real)
   }
 
   return (
     <Image
       src="/images/atento-logo.png"
       alt="Atento"
-      width={120}
-      height={48}
+      width={200}  
+      height={80}   
       className={cn(sizeClasses[variant], className)}
       priority
     />

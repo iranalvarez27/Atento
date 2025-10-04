@@ -22,8 +22,6 @@ export default function ForgotPasswordPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
-
-    // Simulacion API
     setTimeout(() => {
       setIsLoading(false)
       setIsSubmitted(true)
@@ -32,9 +30,10 @@ export default function ForgotPasswordPage() {
   // Vista cuando ya se envió el correo
   if (isSubmitted) {
     return (
-      <div className="min-h-screen flex flex-col">
-        <Navbar/>
-        <div className="flex items-center justify-center py-10">
+      <div className="min-h-screen flex flex-col relative">
+        <Navbar />
+      
+        <div className="absolute inset-0 flex items-center justify-center">
           <Card className="w-full max-w-md bg-transparent text-white shadow-none border-0">
             <CardHeader className="text-center space-y-6">
               <div className="flex justify-center">
@@ -84,9 +83,10 @@ export default function ForgotPasswordPage() {
   }
   // Vista inicial (formulario para pedir reset de contraseña)
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar/>
-      <div className="flex items-center justify-center py-20">
+    <div className="min-h-screen flex flex-col relative">
+      <Navbar />
+    
+      <div className="absolute inset-0 flex items-center justify-center">
         <Card className="w-full max-w-md bg-transparent text-white shadow-none border-0">
           <CardHeader className="text-center space-y-4">
             <CardTitle >Recuperar Contraseña</CardTitle>

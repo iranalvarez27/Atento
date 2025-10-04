@@ -2,48 +2,47 @@
 
 import * as React from 'react'
 import * as AvatarPrimitive from '@radix-ui/react-avatar'
-
 import { cn } from '@/lib/utils'
 
+// Avatar Root
 function Avatar({
   className,
   ...props
 }: React.ComponentProps<typeof AvatarPrimitive.Root>) {
   return (
     <AvatarPrimitive.Root
-      data-slot="avatar"
       className={cn(
-        'relative flex size-8 shrink-0 overflow-hidden rounded-full',
-        className,
+        'relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full border border-gray-200 bg-gray-100',
+        className
       )}
       {...props}
     />
   )
 }
 
+// Avatar Image
 function AvatarImage({
   className,
   ...props
 }: React.ComponentProps<typeof AvatarPrimitive.Image>) {
   return (
     <AvatarPrimitive.Image
-      data-slot="avatar-image"
-      className={cn('aspect-square size-full', className)}
+      className={cn('h-full w-full object-cover', className)}
       {...props}
     />
   )
 }
 
+// Avatar Fallback (iniciales si no hay imagen)
 function AvatarFallback({
   className,
   ...props
 }: React.ComponentProps<typeof AvatarPrimitive.Fallback>) {
   return (
     <AvatarPrimitive.Fallback
-      data-slot="avatar-fallback"
       className={cn(
-        'bg-muted flex size-full items-center justify-center rounded-full',
-        className,
+        'flex h-full w-full items-center justify-center rounded-full bg-gray-300 text-sm font-medium text-gray-700',
+        className
       )}
       {...props}
     />

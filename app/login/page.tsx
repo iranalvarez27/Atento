@@ -3,7 +3,6 @@
 import type React from "react"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { AtentoLogo } from "@/components/atento-logo"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -57,9 +56,10 @@ export default function LoginPage() {
     }
   }
   return (
-    <div className="min-h-screen flex flex-col ">
-      <Navbar/>
-      <div className="flex items-center justify-center py-20">
+    <div className="min-h-screen flex flex-col relative">
+      <Navbar />
+
+      <div className="absolute inset-0 flex items-center justify-center">
         <Card className="w-full max-w-md bg-transparent text-white shadow-none border-0">
           <CardHeader className="text-center space-y-4">
             <CardTitle>Iniciar Sesión</CardTitle>

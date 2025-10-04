@@ -15,23 +15,41 @@ interface KpiCardProps {
   className?: string
 }
 
-export function KpiCard({ title, value, subtitle, icon, trend, className }: KpiCardProps) {
+export function KpiCard({
+  title,
+  value,
+  subtitle,
+  icon,
+  trend,
+  className,
+}: KpiCardProps) {
   return (
-    <Card className={cn("", className)}>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium text-muted-foreground">{title}</CardTitle>
-        {icon && <div className="text-muted-foreground">{icon}</div>}
+    <Card className={cn("rounded-lg border shadow-sm", className)}>
+      <CardHeader className="flex flex-row items-center justify-between pb-2">
+        <CardTitle className="text-sm font-medium text-gray-500">
+          {title}
+        </CardTitle>
+        {icon && <div className="text-gray-400">{icon}</div>}
       </CardHeader>
       <CardContent>
         <div className="text-2xl font-bold text-primary">{value}</div>
-        {subtitle && <p className="text-xs text-muted-foreground mt-1">{subtitle}</p>}
+
+        {subtitle && (
+          <p className="mt-1 text-xs text-gray-500">{subtitle}</p>
+        )}
+
         {trend && (
-          <div className="flex items-center mt-2">
-            <span className={cn("text-xs font-medium", trend.isPositive ? "text-green-600" : "text-red-600")}>
+          <div className="mt-2 flex items-center">
+            <span
+              className={cn(
+                "text-xs font-medium",
+                trend.isPositive ? "text-green-600" : "text-red-600"
+              )}
+            >
               {trend.isPositive ? "+" : ""}
               {trend.value}%
             </span>
-            <span className="text-xs text-muted-foreground ml-1">{trend.label}</span>
+            <span className="ml-1 text-xs text-gray-500">{trend.label}</span>
           </div>
         )}
       </CardContent>

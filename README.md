@@ -1,4 +1,4 @@
-# SA_Acelerador_de_Aprendizaje
+# FE-Acelerador_de_Aprendizaje
 
 
 
@@ -15,14 +15,14 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ```
 cd existing_repo
-git remote add origin https://gitlab.com/grupo-atento/sa_acelerador_de_aprendizaje.git
+git remote add origin https://gitlab.com/grupo-atento/fe-acelerador_de_aprendizaje.git
 git branch -M main
 git push -uf origin main
 ```
 
 ## Integrate with your tools
 
-- [ ] [Set up project integrations](https://gitlab.com/grupo-atento/sa_acelerador_de_aprendizaje/-/settings/integrations)
+- [ ] [Set up project integrations](https://gitlab.com/grupo-atento/fe-acelerador_de_aprendizaje/-/settings/integrations)
 
 ## Collaborate with your team
 
