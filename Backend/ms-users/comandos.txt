@@ -1,3 +1,4 @@
 (venv) PS C:\Users\IRAN\PycharmProjects\Software\Backend\ms-users\src\app> cd ..
 (venv) PS C:\Users\IRAN\PycharmProjects\Software\Backend\ms-users\src> python -m app.main
 CORS habilitado para: ['http://localhost:3000', 'http://127.0.0.1:3000']
+(venv) PS C:\Users\IRAN\Documents\GitHub\Atento\Backend\ms-users\src> python -m uvicorn app.main:app --reload
