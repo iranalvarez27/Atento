@@ -1,51 +1,42 @@
 # Este archivo es la "receta" que Render usará para construir y desplegar tu aplicación completa.
+# Versión corregida según la documentación oficial de Render.
 
+# Primero, definimos las bases de datos a nivel principal.
+databases:
+  # Servicio de Base de Datos PostgreSQL
+  - name: atento-db      # Nombre para referenciar internamente
+    plan: free          # Usamos el plan gratuito
+    databaseName: usuarios # El nombre de la base de datos a crear
+    user: admin         # El usuario a crear
+
+# Segundo, definimos los otros servicios.
 services:
   # Servicio 1: Tu API de FastAPI
-  - type: web # Le decimos a Render que este es un servicio web
-    name: atento-api # Un nombre para tu API
-    runtime: docker # Usaremos el Dockerfile para construirlo
-    # ¡IMPORTANTE! Ruta a la carpeta que contiene tu Dockerfile y el código del backend
-    rootDir: Backend/ms-users
-    # Comando para iniciar tu aplicación en producción, apuntando a la ubicación correcta de 'main'
-    startCommand: uvicorn src.app.main:app --host 0.0.0.0 --port 5001
-    # Asignamos el plan gratuito de Render
-    plan: free
+  - type: web           # Es un servicio web
+    name: atento-api    # Nombre del servicio
+    runtime: docker     # Se construye con Docker
+    rootDir: Backend/ms-users # Ruta a la carpeta del backend
+    plan: free          # Usamos el plan gratuito
+    startCommand: uvicorn src.app.main:app --host 0.0.0.0 --port 5001 # Comando de inicio
     envVars:
       - key: PYTHONPATH
         value: /app/src
-      # Obtenemos los datos de conexión de nuestro servicio de base de datos de forma segura
+      # Obtenemos los datos de conexión desde el servicio de base de datos
+      # usando la sintaxis correcta 'fromDatabase'.
       - key: DB_HOST
-        fromService:
-          type: psql # ¡CORREGIDO! El tipo correcto es 'psql'
-          name: atento-db
+        fromDatabase:
+          name: atento-db  # Coincide con el 'name' de la base de datos
           property: host
       - key: DB_NAME
-        fromService:
-          type: psql # ¡CORREGIDO! El tipo correcto es 'psql'
+        fromDatabase:
           name: atento-db
           property: database
       - key: DB_USER
-        fromService:
-          type: psql # ¡CORREGIDO! El tipo correcto es 'psql'
+        fromDatabase:
           name: atento-db
           property: user
       - key: DB_PASSWORD
-        fromService:
-          type: psql # ¡CORREGIDO! El tipo correcto es 'psql'
+        fromDatabase:
           name: atento-db
           property: password
-
-  # Servicio 2: Tu base de datos PostgreSQL gestionada por Render
-  - type: psql # ¡CORREGIDO! El tipo correcto es 'psql'
-    name: atento-db # Un nombre para la base de datos
-    # Asignamos el plan gratuito
-    plan: free
-    # Render se encarga de crear el usuario y la base de datos especificados
-    databases:
-      - name: usuarios
-        user: admin
-
-# Nota: No incluimos 'Adminer' porque es una herramienta de desarrollo
-# y no es seguro exponerla públicamente en un entorno de producción.
 
