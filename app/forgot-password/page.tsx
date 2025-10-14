@@ -2,7 +2,6 @@
 
 import type React from "react"
 import { useState } from "react"
-import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -17,16 +16,34 @@ export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
-  const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
-    setTimeout(() => {
-      setIsLoading(false)
+
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/forgot-password`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      })
+
+      if (!res.ok) {
+        const errorData = await res.json()
+        throw new Error(errorData.detail || "Error al enviar el correo")
+      }
+
+      // Si llega aquí, fue exitoso
       setIsSubmitted(true)
-    }, 2000)
+    } catch (error: any) {
+      alert(error.message)
+    } finally {
+      setIsLoading(false)
+    }
   }
+
   // Vista cuando ya se envió el correo
   if (isSubmitted) {
     return (

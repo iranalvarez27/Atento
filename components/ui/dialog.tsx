@@ -16,6 +16,12 @@ function DialogTrigger(props: React.ComponentProps<typeof DialogPrimitive.Trigge
   return <DialogPrimitive.Trigger {...props} />
 }
 
+function DialogClose({
+  ...props
+}: React.ComponentProps<typeof DialogPrimitive.Close>) {
+  return <DialogPrimitive.Close data-slot="dialog-close" {...props} />
+}
+
 // Overlay
 function DialogOverlay({ className, ...props }: React.ComponentProps<typeof DialogPrimitive.Overlay>) {
   return (
@@ -93,6 +99,7 @@ function DialogDescription({ className, ...props }: React.ComponentProps<typeof 
 
 export {
   Dialog,
+  DialogClose,
   DialogTrigger,
   DialogContent,
   DialogOverlay,

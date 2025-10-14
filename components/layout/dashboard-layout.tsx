@@ -46,7 +46,8 @@ export function DashboardLayout({
                 <p className="text-xs text-neutral-500 capitalize">{user.role}</p>
               </div>
               <div className="rounded-full bg-[#3B2748] text-white h-10 w-10 grid place-items-center font-semibold">
-                {user.name[0].toUpperCase()}
+                {user?.name?.[0]?.toUpperCase() || user?.email?.[0]?.toUpperCase() || "?"}
+
               </div>
             </div>
           </header>

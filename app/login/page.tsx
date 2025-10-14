@@ -1,15 +1,15 @@
 "use client"
 
-import type React from "react"
-import { useState } from "react"
+import { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { login } from "@/lib/auth"
+import { Alert } from "@/components/ui/alert"
+import { login, logout } from "@/lib/auth";
 import Navbar from "@/components/navbar"
+import { AlertCircle } from "lucide-react";
 import Link from "next/link"
 
 // Página de inicio de sesión
@@ -18,43 +18,50 @@ export default function LoginPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false) // alternar visibilidad
-  const [error, setError] = useState("") // mensajes de error
+  const [error, setError] = useState<string | null>(null); // mensajes de error
   const [isLoading, setIsLoading] = useState(false) // control de carga
   const router = useRouter()
 
   // Manejo de envío del formulario
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setError("")
+  e.preventDefault()
+  setIsLoading(true)
+  setError(null);
 
-    try {
-      // Validación de usuario con funcion "login"
-      const user = login(email, password)
-      if (user) {
-        // Redirigir segun el rol del usuario
-        switch (user.role) {
-          case "agente":
-            router.push("/agente/dashboard")
-            break
-          case "supervisor":
-            router.push("/supervisor/dashboard")
-            break
-          case "admin":
-            router.push("/admin/usuarios")
-            break
+  try {
+    logout();
+    const user = await login(email, password)
+
+    if (user && user.role) {
+      const role = user.role.toLowerCase() //convierte a minúsculas
+
+      switch (role) {
+        case "learner":
+          router.push("/agente/dashboard")
+          break
+        case "supervisor":
+          router.push("/supervisor/dashboard")
+          break
+        case "admin":
+          router.push("/admin/usuarios")
+          break
+        default:
+              // Un fallback por si el rol no es reconocido
+              router.push("/");
+          }
+        } else {
+          // Este caso se activará si el login devuelve null sin lanzar un error
+          setError("Credenciales incorrectas. Intenta de nuevo.");
         }
-      } else {
-        // Error si credenciales no coinciden
-        setError("Credenciales incorrectas. Intenta de nuevo.")
+      } catch (err: any) {
+        // MEJORA: Muestra el mensaje de error específico del backend.
+        console.error("Error capturado en el formulario de login:", err);
+        setError(err.message || "Error al iniciar sesión. Intenta de nuevo.");
+      } finally {
+        setIsLoading(false);
       }
-    } catch (err) {
-      // Manejo de errores generales
-      setError("Error al iniciar sesión. Intenta de nuevo.")
-    } finally {
-      setIsLoading(false)
-    }
-  }
+  };
+
   return (
     <div className="min-h-screen flex flex-col relative">
       <Navbar />
@@ -64,7 +71,7 @@ export default function LoginPage() {
           <CardHeader className="text-center space-y-4">
             <CardTitle>Iniciar Sesión</CardTitle>
             <CardDescription >
-              Ingresa tus credenciales para acceder al sistema de entrenamiento
+              Ingresa tus credenciales para acceder al sistema
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -122,20 +129,8 @@ export default function LoginPage() {
                   variant="destructive"
                   className="flex items-center gap-2 border border-red-500 text-red-500 bg-transparent rounded-md px-3 py-2 -mt-5"
                 >
-                  <svg className=" h-6 w-6 text-red-500 -mt-1 p-0"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  ><path strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    /></svg>
-
-                 
-                  <AlertDescription className="text-red-500 bg-transparent border-0 p-0">
-                    {error}
-                  </AlertDescription>
+                  <AlertCircle className="h-5 w-5 flex-shrink-0" />
+                  <p className="text-sm font-medium">{error}</p>
                 </Alert>
               )}
 

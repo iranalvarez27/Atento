@@ -10,8 +10,9 @@ export default function HomePage() {
     // Verifica si hay usuario autenticado
     const user = getCurrentUser()
 
+  
     if (user) {
-      // Redirige según el rol del usuario
+      // Redirect based on user role
       switch (user.role) {
         case "agente":
           router.push("/agente/dashboard")
@@ -22,9 +23,10 @@ export default function HomePage() {
         case "admin":
           router.push("/admin/usuarios")
           break
+        default:
+          router.push("/login")
       }
     } else {
-      // Si no hay usuario, enviar a login
       router.push("/login")
     }
   }, [router])
