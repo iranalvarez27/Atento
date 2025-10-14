@@ -5,8 +5,12 @@ from app.config.jwt_service import JwtService
 jwt_service = JwtService()
 
 EXCLUDED_PATHS = [
+    "/health",
     "/auth/login",
     "/auth/register",
+    "/auth/forgot-password",
+    "/auth/verify-code",
+    "/auth/reset-password",
     "/docs",
     "/redoc",
     "/openapi.json"

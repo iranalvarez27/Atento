@@ -34,7 +34,8 @@ ENV/
 *.swp
 *.swo
 *~
-
+*.env
+.env
 # Database
 *.db
 *.sqlite3

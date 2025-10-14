@@ -7,6 +7,7 @@ from app.user.dto.update_role_request_dto import UpdateRoleRequest
 from app.user.dto.change_password_request_dto import ChangePasswordRequest
 from typing import List, Optional, Dict, Any
 from app.config.security_config import PasswordHasher
+from app.config.settings import settings
 
 class UserService:
     def __init__(self, repository: UserRepository):
@@ -181,10 +182,11 @@ class UserService:
 
         # Actualizar en BD
         cursor = self.repository.db.cursor()
-        cursor.execute("""
-            UPDATE usuarios SET password = ?, updated_at = ?
-            WHERE id = ?
-        """, (new_hashed_password, __import__('datetime').datetime.now().isoformat(), user['id']))
+        cursor.execute(f"""
+            UPDATE {settings.POSTGRES_SCHEMA}.usuarios
+            SET password = %s, updated_at = %s
+            WHERE id = %s
+        """, (new_hashed_password, __import__('datetime').datetime.now(), user['id']))
         self.repository.db.commit()
 
         return self.get_user_by_id(user_id)
