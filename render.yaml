@@ -17,7 +17,8 @@ services:
     runtime: docker     # Se construye con Docker
     rootDir: Backend/ms-users # Ruta a la carpeta del backend
     plan: free          # Usamos el plan gratuito
-    startCommand: uvicorn src.app.main:app --host 0.0.0.0 --port 5001 # Comando de inicio
+    # La línea 'startCommand' ha sido eliminada.
+    # Render usará la instrucción 'CMD' del Dockerfile para iniciar el servicio.
     envVars:
       - key: PYTHONPATH
         value: /app/src
