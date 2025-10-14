@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 "use client";
 
 import type React from "react";
@@ -34,6 +35,38 @@ export default function ForgotPasswordPage() {
       setIsLoading(false);
     }
   };
+=======
+"use client"
+
+import type React from "react"
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { AtentoLogo } from "@/components/atento-logo"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import Link from "next/link"
+import { ArrowLeft, CheckCircle } from "lucide-react"
+
+export default function ForgotPasswordPage() {
+  const [email, setEmail] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const router = useRouter()
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsLoading(true)
+
+    // Simulación API
+    setTimeout(() => {
+      setIsLoading(false)
+      setIsSubmitted(true)
+    }, 2000)
+  }
+>>>>>>> Stashed changes
 
   if (isSubmitted) {
     return (
@@ -58,9 +91,15 @@ export default function ForgotPasswordPage() {
             <CardContent>
               <div className="space-y-4">
                 <Alert className="rounded-md bg-white/10 border border-gray-600 [&_*]:!text-gray-200">
+<<<<<<< Updated upstream
                   <AlertDescription>
                     Revisa tu bandeja de entrada y sigue las instrucciones del correo. Si no lo encuentras, revisa tu carpeta de spam.
                   </AlertDescription>
+=======
+                <AlertDescription>
+                  Revisa tu bandeja de entrada y sigue las instrucciones del correo. Si no lo encuentra, revisa tu carpeta de spam.
+                </AlertDescription>
+>>>>>>> Stashed changes
                 </Alert>
                 <Link href="/login">
                   <Button
@@ -76,7 +115,11 @@ export default function ForgotPasswordPage() {
           </Card>
         </div>
       </div>
+<<<<<<< Updated upstream
     );
+=======
+    )
+>>>>>>> Stashed changes
   }
 
   return (
@@ -108,6 +151,7 @@ export default function ForgotPasswordPage() {
                   className="rounded-full bg-white/10 border border-gray-500 text-white placeholder:text-gray-400 focus:ring-2 focus:ring-blue-400"
                 />
               </div>
+<<<<<<< Updated upstream
 
               {/* Bloque para mostrar errores de la API */}
               {error && (
@@ -117,6 +161,8 @@ export default function ForgotPasswordPage() {
                 </div>
               )}
 
+=======
+>>>>>>> Stashed changes
               <Button
                 type="submit"
                 className="w-full rounded-full border border-blue-400 text-blue-400 font-semibold bg-transparent hover:bg-blue-500/10"
@@ -138,5 +184,9 @@ export default function ForgotPasswordPage() {
         </Card>
       </div>
     </div>
+<<<<<<< Updated upstream
   );
+=======
+  )
+>>>>>>> Stashed changes
 }
