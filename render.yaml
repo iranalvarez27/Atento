@@ -1,0 +1,25 @@
+# Este archivo es la "receta" que Render usará para construir y desplegar tu aplicación completa.
+
+services:
+  - type: web 
+    name: atento-api 
+    runtime: docker 
+    rootDir: Backend/ms-users
+    envVars:
+      - key: PYTHONPATH
+        value: /app/src
+      - key: DB_NAME
+        value: usuarios 
+      - key: DB_USER
+        value: admin 
+      - key: DATABASE_URL
+        fromService:
+          type: psql
+          name: atento-db 
+          property: connectionString
+
+  - type: psql 
+    name: atento-db 
+    databases:
+      - name: usuarios
+        user: admin
