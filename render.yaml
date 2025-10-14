@@ -7,8 +7,8 @@ services:
     runtime: docker # Usaremos el Dockerfile para construirlo
     # ¡IMPORTANTE! Ruta a la carpeta que contiene tu Dockerfile y el código del backend
     rootDir: Backend/ms-users
-    # Comando para iniciar tu aplicación en producción
-    startCommand: uvicorn main:app --host 0.0.0.0 --port 5001
+    # Comando para iniciar tu aplicación en producción, apuntando a la ubicación correcta de 'main'
+    startCommand: uvicorn src.app.main:app --host 0.0.0.0 --port 5001
     # Asignamos el plan gratuito de Render
     plan: free
     envVars:
@@ -17,27 +17,27 @@ services:
       # Obtenemos los datos de conexión de nuestro servicio de base de datos de forma segura
       - key: DB_HOST
         fromService:
-          type: postgres
+          type: psql # ¡CORREGIDO! El tipo correcto es 'psql'
           name: atento-db
           property: host
       - key: DB_NAME
         fromService:
-          type: postgres
+          type: psql # ¡CORREGIDO! El tipo correcto es 'psql'
           name: atento-db
           property: database
       - key: DB_USER
         fromService:
-          type: postgres
+          type: psql # ¡CORREGIDO! El tipo correcto es 'psql'
           name: atento-db
           property: user
       - key: DB_PASSWORD
         fromService:
-          type: postgres
+          type: psql # ¡CORREGIDO! El tipo correcto es 'psql'
           name: atento-db
           property: password
 
   # Servicio 2: Tu base de datos PostgreSQL gestionada por Render
-  - type: postgres # ¡CORREGIDO! El tipo correcto es 'postgres'
+  - type: psql # ¡CORREGIDO! El tipo correcto es 'psql'
     name: atento-db # Un nombre para la base de datos
     # Asignamos el plan gratuito
     plan: free
